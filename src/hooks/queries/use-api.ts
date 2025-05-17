@@ -6,6 +6,8 @@ type ApiQueryOptions = {
   refetchInterval?: number | false;
   refetchOnWindowFocus?: boolean;
   retry?: boolean | number;
+  staleTime?: number;
+  refetchIntervalInBackground?: boolean;
   onSuccess?: (data: any) => void;
   onError?: (error: Error) => void;
 };
@@ -43,10 +45,24 @@ export function useHealthCheck(options?: ApiQueryOptions) {
     API_ENDPOINTS.HEALTH, 
     ['health'],
     {
+      // 每10秒自动刷新一次
+      refetchInterval: 10000,
+      // 页面获取焦点时刷新
+      refetchOnWindowFocus: true,
+      // 禁用缓存
+      staleTime: 0,
+      // 请求失败时不重试
+      retry: false,
+      // 即使组件未挂载也继续请求
+      refetchIntervalInBackground: true,
       ...options,
       onSuccess: (data) => {
         console.log('Health check response:', data);
         options?.onSuccess?.(data);
+      },
+      onError: (error) => {
+        console.error('Health check error:', error);
+        options?.onError?.(error);
       }
     }
   );

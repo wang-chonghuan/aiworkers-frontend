@@ -1,54 +1,65 @@
-# React + TypeScript + Vite
+# AI Workers Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+前端项目使用React, TypeScript和Vite构建。
 
-Currently, two official plugins are available:
+## 环境配置
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+项目支持不同环境的配置，通过环境变量文件进行管理。
 
-## Expanding the ESLint configuration
+### 环境变量文件
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+在项目根目录创建以下文件：
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. `.env.dev` - 开发环境配置
+```
+VITE_API_BASE_URL=http://localhost:7777
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. `.env.prod` - 生产环境配置
 ```
+VITE_API_BASE_URL=https://XXXX
+```
+
+注意：所有环境变量必须以`VITE_`开头才能在前端代码中访问。
+
+## 可用命令
+
+### 开发环境
+
+- 开发环境启动（连接到开发后端）：
+```
+npm run dev:dev
+```
+
+- 生产环境启动（连接到生产后端）：
+```
+npm run dev:prod
+```
+
+### 构建
+
+- 开发环境构建：
+```
+npm run build:dev
+```
+
+- 生产环境构建：
+```
+npm run build:prod
+```
+
+### 其他命令
+
+- 代码检查：
+```
+npm run lint
+```
+
+- 预览构建结果：
+```
+npm run preview
+```
+
+## API连接
+
+API基础URL必须在环境变量文件中明确设置。如果未设置VITE_API_BASE_URL环境变量，应用将无法启动并显示错误信息。

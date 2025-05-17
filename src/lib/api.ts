@@ -1,5 +1,14 @@
 // Base API configuration
-const API_BASE_URL = 'https://api.ai-workers.net';
+if (!import.meta.env.VITE_API_BASE_URL) {
+  throw new Error('VITE_API_BASE_URL environment variable is not set. Please configure it in your .env file.');
+}
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// Log the current API URL when in development
+if (import.meta.env.DEV) {
+  console.log('Current API URL:', API_BASE_URL);
+}
 
 // API endpoints
 export const API_ENDPOINTS = {
