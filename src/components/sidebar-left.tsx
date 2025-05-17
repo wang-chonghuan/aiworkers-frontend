@@ -31,7 +31,7 @@ import {
 const data = {
   teams: [
     {
-      name: "Acme Inc",
+      name: "AI Workers",
       logo: Command,
       plan: "Enterprise",
     },
@@ -99,7 +99,7 @@ const data = {
   ],
   favorites: [
     {
-      name: "Project Management & Task Tracking",
+      name: "Browser use and Workflow use",
       url: "#",
       emoji: "📊",
     },

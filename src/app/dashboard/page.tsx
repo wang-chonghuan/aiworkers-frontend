@@ -26,7 +26,7 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    Project Management & Task Tracking
+                    Browser use and Workflow use
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
