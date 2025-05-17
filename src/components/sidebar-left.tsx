@@ -26,6 +26,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useHealthCheck } from "@/hooks/queries/use-api"
 
 // This is sample data.
 const data = {
@@ -68,33 +69,6 @@ const data = {
       url: "#",
       icon: Inbox,
       badge: "10",
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-    },
-    {
-      title: "Templates",
-      url: "#",
-      icon: Blocks,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-    },
-    {
-      title: "Help",
-      url: "#",
-      icon: MessageCircleQuestion,
     },
   ],
   favorites: [
@@ -261,6 +235,47 @@ const data = {
 export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  // Use the health check hook
+  const healthCheck = useHealthCheck();
+  
+  // Create nav secondary items with health check
+  const navSecondaryItems = [
+    {
+      title: "Calendar",
+      url: "#",
+      icon: Calendar,
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings2,
+    },
+    {
+      title: "Templates",
+      url: "#",
+      icon: Blocks,
+    },
+    {
+      title: "Trash",
+      url: "#",
+      icon: Trash2,
+    },
+    {
+      title: "Health Check",
+      url: "#",
+      icon: MessageCircleQuestion,
+      onClick: () => {
+        // Trigger a refetch when clicking
+        healthCheck.refetch();
+      },
+      status: healthCheck.isLoading 
+        ? "Loading..." 
+        : healthCheck.isError 
+          ? "Error" 
+          : "Online"
+    },
+  ];
+  
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
@@ -270,7 +285,7 @@ export function SidebarLeft({
       <SidebarContent>
         <NavFavorites favorites={data.favorites} />
         <NavWorkspaces workspaces={data.workspaces} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary items={navSecondaryItems} className="mt-auto" />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

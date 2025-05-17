@@ -1,7 +1,11 @@
 import Page from "@/app/dashboard/page"
+import { QueryProvider } from "@/providers/query-provider"
+
 function App() {
   return (
-    <Page />
+    <QueryProvider>
+      <Page />
+    </QueryProvider>
   )
 }
 
