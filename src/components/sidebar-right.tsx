@@ -39,11 +39,13 @@ const data = {
 }
 
 export function SidebarRight({
+  collapsible = "icon", // Default collapsible state, can be overridden by props
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      collapsible="none"
+      side="right"
+      collapsible={collapsible}
       className="sticky top-0 hidden h-svh border-l lg:flex"
       {...props}
     >
@@ -58,7 +60,7 @@ export function SidebarRight({
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
+            <SidebarMenuButton side="right">
               <Plus />
               <span>New Calendar</span>
             </SidebarMenuButton>
