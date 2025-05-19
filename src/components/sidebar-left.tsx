@@ -76,12 +76,12 @@ const data = {
     {
       name: "Browser workflows",
       url: "#",
-      emoji: "📊",
+      emoji: "🚀",
     },
     {
-      name: "Slack bots prompts",
+      name: "Slack agents",
       url: "#",
-      emoji: "🍳",
+      emoji: "🤖",
     },
   ],
   workspaces: [
