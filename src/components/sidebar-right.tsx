@@ -15,28 +15,28 @@ import {
   // SidebarSeparator, // Removed
 } from "@/components/ui/sidebar"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  calendars: [
-    {
-      name: "My Calendars",
-      items: ["Personal", "Work", "Family"],
-    },
-    {
-      name: "Favorites",
-      items: ["Holidays", "Birthdays"],
-    },
-    {
-      name: "Other",
-      items: ["Travel", "Reminders", "Deadlines"],
-    },
-  ],
-}
+// This is sample data. // This whole data const will be removed as 'user' and 'calendars' are no longer used.
+// const data = {
+//   user: {
+//     name: "shadcn",
+//     email: "m@example.com",
+//     avatar: "/avatars/shadcn.jpg",
+//   },
+//   calendars: [
+//     {
+//       name: "My Calendars",
+//       items: ["Personal", "Work", "Family"],
+//     },
+//     {
+//       name: "Favorites",
+//       items: ["Holidays", "Birthdays"],
+//     },
+//     {
+//       name: "Other",
+//       items: ["Travel", "Reminders", "Deadlines"],
+//     },
+//   ],
+// };
 
 export function SidebarRight({
   collapsible = "icon", // Default collapsible state, can be overridden by props
@@ -50,7 +50,7 @@ export function SidebarRight({
       {...props}
     >
       <SidebarHeader className="border-sidebar-border h-16 border-b">
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarHeader>
       <SidebarContent>
         {/* DatePicker, Separator, and Calendars are removed from here */}
