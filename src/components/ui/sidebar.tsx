@@ -571,49 +571,57 @@ const sidebarMenuButtonVariants = cva(
   }
 )
 
-function SidebarMenuButton({
+const SidebarMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean;
+    isActive?: boolean;
+    tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+    side?: "left" | "right";
+  } & VariantProps<typeof sidebarMenuButtonVariants>
+>(({
   asChild = false,
   isActive = false,
   variant = "default",
   size = "default",
   tooltip,
   className,
+  children,
+  side: currentSide,
   ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean;
-  isActive?: boolean;
-  tooltip?: string | React.ComponentProps<typeof TooltipContent>;
-  side?: "left" | "right";
-} & VariantProps<typeof sidebarMenuButtonVariants>) {
-  const Comp = asChild ? Slot : "button"
+}, ref) => {
+  const Comp = asChild ? Slot : "button";
   const { isMobile, leftState, rightState } = useSidebar();
-  const currentMenuButtonSide = props.side ?? "left";
-  const state = currentMenuButtonSide === "left" ? leftState : rightState;
+  const menuButtonSide = currentSide ?? "left";
+  const state = menuButtonSide === "left" ? leftState : rightState;
 
-  const button = (
+  const buttonElement = (
     <Comp
+      ref={ref}
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
       {...props}
-    />
-  )
+    >
+      {children}
+    </Comp>
+  );
 
   if (!tooltip) {
-    return button
+    return buttonElement;
   }
 
   if (typeof tooltip === "string") {
     tooltip = {
       children: tooltip,
-    }
+    };
   }
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
+      <TooltipTrigger asChild>{buttonElement}</TooltipTrigger>
       <TooltipContent
         side="right"
         align="center"
@@ -621,22 +629,28 @@ function SidebarMenuButton({
         {...tooltip}
       />
     </Tooltip>
-  )
-}
+  );
+});
+SidebarMenuButton.displayName = "SidebarMenuButton";
 
-function SidebarMenuAction({
+const SidebarMenuAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & {
+    asChild?: boolean;
+    showOnHover?: boolean;
+  }
+>(({
   className,
   asChild = false,
   showOnHover = false,
+  children,
   ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean
-  showOnHover?: boolean
-}) {
-  const Comp = asChild ? Slot : "button"
+}, ref) => {
+  const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
+      ref={ref}
       data-slot="sidebar-menu-action"
       data-sidebar="menu-action"
       className={cn(
@@ -651,9 +665,12 @@ function SidebarMenuAction({
         className
       )}
       {...props}
-    />
-  )
-}
+    >
+      {children}
+    </Comp>
+  );
+});
+SidebarMenuAction.displayName = "SidebarMenuAction";
 
 function SidebarMenuBadge({
   className,
