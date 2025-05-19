@@ -1,18 +1,18 @@
 import * as React from "react"
-import { Plus } from "lucide-react"
+// Plus removed from lucide-react as it's no longer used
 
-import { Calendars } from "@/components/calendars"
-import { DatePicker } from "@/components/date-picker"
+// Calendars removed as no longer used
+// DatePicker removed as no longer used
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  // SidebarFooter, // Removed
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator,
+  // SidebarMenu, // Removed
+  // SidebarMenuButton, // Removed
+  // SidebarMenuItem, // Removed
+  // SidebarSeparator, // Removed
 } from "@/components/ui/sidebar"
 
 // This is sample data.
