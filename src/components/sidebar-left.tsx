@@ -30,150 +30,48 @@ import { usePlaygroundStore } from "@/store";
 import { AgentSection, Endpoint, NewChatButton } from "./playground/Sidebar/Sidebar";
 import Sessions from "./playground/Sidebar/Sessions";
 
-// This is sample data.
-const data = {
-  teams: [
-    {
-      name: "AI Workers",
-      logo: CustomLogo,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Ask AI",
-      url: "#",
-      icon: Sparkles,
-    },
-    {
-      title: "Home",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-      badge: "10",
-    },
-  ],
-  favorites: [
-    {
-      name: "Browser workflows",
-      url: "#",
-      emoji: "🚀",
-    },
-    {
-      name: "Slack agents",
-      url: "#",
-      emoji: "🤖",
-    },
-  ],
-  workspaces: [
-    {
-      name: "Personal Life Management",
-      emoji: "🏠",
-      pages: [
-        {
-          name: "Daily Journal & Reflection",
-          url: "#",
-          emoji: "📔",
-        },
-        {
-          name: "Health & Wellness Tracker",
-          url: "#",
-          emoji: "🍏",
-        },
-        {
-          name: "Personal Growth & Learning Goals",
-          url: "#",
-          emoji: "🌟",
-        },
-      ],
-    },
-    {
-      name: "Professional Development",
-      emoji: "💼",
-      pages: [
-        {
-          name: "Career Objectives & Milestones",
-          url: "#",
-          emoji: "🎯",
-        },
-        {
-          name: "Skill Acquisition & Training Log",
-          url: "#",
-          emoji: "🧠",
-        },
-        {
-          name: "Networking Contacts & Events",
-          url: "#",
-          emoji: "🤝",
-        },
-      ],
-    },
-  ],
-};
-
 export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  // Use the health check hook
-  const healthCheck = useHealthCheck();
 
-  // Create nav secondary items with health check
-  const navSecondaryItems = [
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-    },
-    {
-      title: "Templates",
-      url: "#",
-      icon: Blocks,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-    },
-    {
-      title: "Health Check",
-      url: "#",
-      icon: MessageCircleQuestion,
-      onClick: () => {
-        // Trigger a refetch when clicking
-        healthCheck.refetch();
+  const data = {
+    teams: [
+      {
+        name: "finley",
+        logo: CustomLogo,
+        plan: "Enterprise",
       },
-      status: healthCheck.isLoading
-        ? "Loading..."
-        : healthCheck.isError
-          ? "Error"
-          : "Online",
-    },
-  ];
+      {
+        name: "Acme Corp.",
+        logo: AudioWaveform,
+        plan: "Startup",
+      }
+    ],
+    navMain: [
+      {
+        title: "Home",
+        url: "#",
+        icon: Home,
+        isActive: true,
+      },
+      {
+        title: "Search",
+        url: "#",
+        icon: Search,
+      },
+      {
+        title: "Ask AI",
+        url: "#",
+        icon: Sparkles,
+      },
+      {
+        title: "Inbox",
+        url: "#",
+        icon: Inbox,
+        badge: "10",
+      },
+    ]
+  };
 
   const { clearChat, focusChatInput, initializePlayground } = useChatActions()
   const { messages, selectedEndpoint, isEndpointActive, hydrated } = usePlaygroundStore()

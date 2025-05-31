@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQueryState } from 'nuqs'
@@ -8,30 +6,12 @@ import { LucideArrowDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { isValidUrl, truncateText } from '@/lib/utils'
-import { getProviderIcon } from '@/lib/modelProvider'
 import { toast } from 'sonner'
 import { usePlaygroundStore } from '@/store'
 import useChatActions from '@/hooks/useChatActions'
 import { AgentSelector } from '@/components/playground/Sidebar/AgentSelector'
-import Sessions from './Sessions/Sessions'
-
-import {
-  Sidebar as ShadcnSidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarTrigger,
-  SidebarFooter,
-  SidebarProvider
-} from '@/components/ui/sidebar'
 
 const ENDPOINT_PLACEHOLDER = 'NO ENDPOINT ADDED'
-
-const FinleySidebarHeader = () => (
-  <div className="flex items-center gap-2 px-3 py-2">
-    <LucideArrowDown className="size-4" />
-    <span className="text-xs font-medium uppercase text-white">Finley</span>
-  </div>
-)
 
 export const NewChatButton = ({
   disabled,
@@ -49,16 +29,6 @@ export const NewChatButton = ({
     <LucideArrowDown className="size-4" />
     <span className="uppercase">New Chat</span>
   </Button>
-)
-
-const ModelDisplay = ({ model }: { model: string }) => (
-  <div className="mx-3 flex h-9 w-[calc(100%-1.5rem)] items-center gap-3 rounded-xl border border-primary/15 bg-accent p-3 text-xs font-medium uppercase text-muted">
-    {(() => {
-      const icon = getProviderIcon(model)
-      return icon ? <LucideArrowDown className="size-4" /> : null
-    })()}
-    {model}
-  </div>
 )
 
 export const Endpoint = () => {
@@ -211,8 +181,7 @@ export const Endpoint = () => {
 }
 
 export const AgentSection = () => {
-  const { isEndpointActive, selectedModel, isEndpointLoading } = usePlaygroundStore()
-  const [agentId] = useQueryState('agent')
+  const { isEndpointActive, isEndpointLoading } = usePlaygroundStore()
 
   if (!isEndpointActive) return null
 
@@ -233,52 +202,8 @@ export const AgentSection = () => {
       ) : (
         <>
           <AgentSelector />
-          {selectedModel && agentId && <ModelDisplay model={selectedModel} />}
         </>
       )}
     </motion.div>
   )
 }
-
-const Sidebar = () => {
-  const { clearChat, focusChatInput, initializePlayground } = useChatActions()
-  const { messages, selectedEndpoint, isEndpointActive, hydrated } = usePlaygroundStore()
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-    if (hydrated) initializePlayground()
-  }, [selectedEndpoint, initializePlayground, hydrated])
-
-  const handleNewChat = () => {
-    clearChat()
-    focusChatInput()
-  }
-
-  return (
-    <SidebarProvider defaultOpen={true}>
-      <ShadcnSidebar collapsible="icon">
-        <SidebarHeader className="border-none">
-          <FinleySidebarHeader />
-        </SidebarHeader>
-        <SidebarContent className="flex flex-col gap-5 py-3">
-          <NewChatButton
-            disabled={messages.length === 0}
-            onClick={handleNewChat}
-          />
-          {isMounted && (
-            <>
-              <Endpoint />
-              <AgentSection />
-              {isEndpointActive && <Sessions />}
-            </>
-          )}
-        </SidebarContent>
-        <SidebarFooter className="border-none"></SidebarFooter>
-        <SidebarTrigger className="absolute right-2 top-2" />
-      </ShadcnSidebar>
-    </SidebarProvider>
-  )
-}
-
-export default Sidebar
