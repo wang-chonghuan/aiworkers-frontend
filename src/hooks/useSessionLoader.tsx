@@ -5,7 +5,7 @@ import {
 } from '@/api/playground'
 import { usePlaygroundStore } from '../store'
 import { toast } from 'sonner'
-import {
+import type {
   PlaygroundChatMessage,
   ToolCall,
   ReasoningMessage,

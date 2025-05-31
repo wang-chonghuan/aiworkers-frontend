@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   Blocks,
@@ -13,21 +13,22 @@ import {
   Settings2,
   Sparkles,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
-import { CustomLogo } from "@/components/custom-logo"
-import { NavFavorites } from "@/components/nav-favorites"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavWorkspaces } from "@/components/nav-workspaces"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { CustomLogo } from "@/components/custom-logo";
+import { NavMain } from "@/components/nav-main";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { useHealthCheck } from "@/hooks/queries/use-api"
+} from "@/components/ui/sidebar";
+import { useHealthCheck } from "@/hooks/queries/use-api";
+import useChatActions from "@/hooks/useChatActions";
+import { usePlaygroundStore } from "@/store";
+import { AgentSection, Endpoint, NewChatButton } from "./playground/Sidebar/Sidebar";
+import Sessions from "./playground/Sidebar/Sessions";
 
 // This is sample data.
 const data = {
@@ -128,14 +129,14 @@ const data = {
       ],
     },
   ],
-}
+};
 
 export function SidebarLeft({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   // Use the health check hook
   const healthCheck = useHealthCheck();
-  
+
   // Create nav secondary items with health check
   const navSecondaryItems = [
     {
@@ -166,14 +167,28 @@ export function SidebarLeft({
         // Trigger a refetch when clicking
         healthCheck.refetch();
       },
-      status: healthCheck.isLoading 
-        ? "Loading..." 
-        : healthCheck.isError 
-          ? "Error" 
-          : "Online"
+      status: healthCheck.isLoading
+        ? "Loading..."
+        : healthCheck.isError
+          ? "Error"
+          : "Online",
     },
   ];
-  
+
+  const { clearChat, focusChatInput, initializePlayground } = useChatActions()
+  const { messages, selectedEndpoint, isEndpointActive, hydrated } = usePlaygroundStore()
+  const [isMounted, setIsMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setIsMounted(true)
+    if (hydrated) initializePlayground()
+  }, [selectedEndpoint, initializePlayground, hydrated])
+
+  const handleNewChat = () => {
+    clearChat()
+    focusChatInput()
+  }
+
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
@@ -181,11 +196,19 @@ export function SidebarLeft({
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavFavorites favorites={data.favorites} />
-        <NavWorkspaces workspaces={data.workspaces} />
-        <NavSecondary items={navSecondaryItems} className="mt-auto" />
+        <NewChatButton
+          disabled={messages.length === 0}
+          onClick={handleNewChat}
+        />
+        {isMounted && (
+          <>
+            <Endpoint />
+            <AgentSection />
+            {isEndpointActive && <Sessions />}
+          </>
+        )}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

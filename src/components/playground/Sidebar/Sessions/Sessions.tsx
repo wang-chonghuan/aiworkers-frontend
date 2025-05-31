@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useMemo, useState, useRef, useCallback } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -11,7 +9,7 @@ import SessionBlankState from './SessionBlankState'
 import useSessionLoader from '@/hooks/useSessionLoader'
 
 import { cn } from '@/lib/utils'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
 interface SkeletonListProps {
@@ -67,7 +65,7 @@ const Sessions = () => {
     null
   )
   const { getSession, getSessions } = useSessionLoader()
-  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { isSessionsLoading } = usePlaygroundStore()
 
   const handleScroll = () => {

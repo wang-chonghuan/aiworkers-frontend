@@ -33,7 +33,7 @@ const FinleySidebarHeader = () => (
   </div>
 )
 
-const NewChatButton = ({
+export const NewChatButton = ({
   disabled,
   onClick
 }: {
@@ -61,7 +61,7 @@ const ModelDisplay = ({ model }: { model: string }) => (
   </div>
 )
 
-const Endpoint = () => {
+export const Endpoint = () => {
   const {
     selectedEndpoint,
     isEndpointActive,
@@ -210,7 +210,7 @@ const Endpoint = () => {
   )
 }
 
-const AgentSection = () => {
+export const AgentSection = () => {
   const { isEndpointActive, selectedModel, isEndpointLoading } = usePlaygroundStore()
   const [agentId] = useQueryState('agent')
 

@@ -1,5 +1,5 @@
 import { useQueryState } from 'nuqs'
-import { SessionEntry } from '@/types/playground'
+import type { SessionEntry } from '@/types/playground'
 import { Button } from '@/components/ui/button'
 import useSessionLoader from '@/hooks/useSessionLoader'
 import { deletePlaygroundSessionAPI } from '@/api/playground'
