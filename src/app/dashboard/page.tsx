@@ -19,7 +19,7 @@ export default function Page() {
     <SidebarProvider>
       <SidebarLeft />
       <SidebarInset>
-        <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
+        <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b bg-background">
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger side="left" />
             <SidebarTrigger side="right" />
@@ -35,7 +35,7 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
+        <div className="flex flex-1 flex-col gap-4 p-4 overflow-y-auto">
         <ChatArea />
         </div>
       </SidebarInset>
